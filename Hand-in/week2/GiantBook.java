@@ -22,7 +22,7 @@ public class GiantBook {
         boolean _nonisolated = false;
 
         int i = 1;
-        while (i <= N) {
+        while (!_connected || !_giantComponenet || !_nonisolated) {
             int p = StdRandom.uniform(N);
             int q = StdRandom.uniform(N);
 
