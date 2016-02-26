@@ -36,7 +36,7 @@ public class GiantBook {
             // Connected
             // Checks if the largest tree is equal to N
             if (uf.maxComponentSize() == N && !_connected){
-              StdOut.printf("Connected after %d connections\n", i);
+              //StdOut.printf("Connected after %d connections\n", i);
               connected[j] = i;
               _connected = true;
             }
@@ -44,7 +44,7 @@ public class GiantBook {
             // Giant Component
             // Check if the Largest tree is equal to N/2
             if (uf.maxComponentSize() >= N/2 && !_giantComponenet){
-              StdOut.printf("Giant Component after %d connections\n", i);
+              //StdOut.printf("Giant Component after %d connections\n", i);
               giant[j] = i;
               _giantComponenet = true;
             }
@@ -52,7 +52,7 @@ public class GiantBook {
             // Nonisolated
             // If the smallest tree is atlest 2
             if (uf.lonelyComponents() == 1 && !_nonisolated){
-              StdOut.printf("Nonisolated after %d connections\n", i);
+              //StdOut.printf("Nonisolated after %d connections\n", i);
               iso[j] = i;
               _nonisolated = true;
             }
@@ -61,8 +61,8 @@ public class GiantBook {
         }
 
       double time = timer.elapsedTime();
-      StdOut.println("" + time);
-      StdOut.println("Done! #"+j);
+      //StdOut.println("" + time);
+      //StdOut.println("Done! #"+j);
 
       j++;
     }
