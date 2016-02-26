@@ -1,11 +1,109 @@
 import java.util.Iterator;
 import edu.princeton.cs.algs4.*;
+import java.util.NoSuchElementException;
 
 public class RandomQueue<Item> implements Iterable<Item> {
 
-    // Your code goes here.
-    // Mine takes ca. 60 lines, my longest method has 5 lines.
-    // The main method below tests your implementation. Do not change it.
+    private Item[] RQ;  // Uses Item, since it's a generic type.
+    private int N = 0;  // Size of the RandomQueue
+    private int last;   // Index of the last element in the array
+
+    public RandomQueue(){ // create an empty random queue
+      // Java is stupid, and you have to typecast the instance of Item
+      RQ = (Item[]) new Object[2];
+    }
+
+    public boolean isEmpty(){ // is it empty?
+      return N == 0;
+    }
+
+    public int size(){ // return the number of elements
+      return N;
+    }
+
+    public void enqueue(Item item) {
+  		// increase array size if necessary
+  		if(N == RQ.length) resize(2 * RQ.length);
+  		// just add a new item at the last available index the array
+  		RQ[last++] = item;
+  		N++;
+	  }
+
+    public Item sample(){ // return (but do not remove) a random item
+      return RQ[StdRandom.uniform(N)];
+    }
+
+    public Item dequeue(){ //  remove and return a random item
+      if (isEmpty()) throw new RuntimeException("Queue underflow");
+
+      // get random element and overwrite index with last element
+		  int i = StdRandom.uniform(N);
+		  Item item = RQ[i];
+		  RQ[i] = RQ[last-1];
+
+      // Null last element value (delete) and update counters
+		  RQ[last-1] = null;
+		  N--;
+		  last--;
+
+      // shrink array if necessary
+		  if (N > 0 && N == RQ.length/4) resize(RQ.length/2);
+		  return item;
+    }
+
+    public Iterator<Item> iterator(){ // return an iterator over the items in random order
+      return new RandomIterator();
+    }
+
+    // resize the array
+  	private void resize(int s) {
+  		assert s >= N; // Checks if the amount of elements, will fit into the new array size
+
+  		Item temp[] = (Item[]) new Object[s];
+  		for(int i = 0; i < N; i++) {
+  			temp[i] = RQ[i];
+  		}
+  		RQ = temp;
+  		last = N;
+  	}
+
+    // RandomIterator class
+	private class RandomIterator implements Iterator<Item> {
+
+		private Item[] copy = (Item[]) new Object[N];
+		private int pos = 0;
+
+		public RandomIterator() {
+			// copy q
+			for (int i = 0; i < last; i++) {
+				copy[i] = RQ[i];
+			}
+
+			// make random permutation of copy
+			for (int k = copy.length - 1; k > 0; k--) {
+				int i = StdRandom.uniform(k);
+				Item t = copy[i];
+				copy[i] = copy[k];
+				copy[k] = t;
+			}
+		}
+
+		public boolean hasNext() {
+			return pos < copy.length;
+		}
+
+		// return next elements. Most likely, elements get picked
+		// more than once. Next works until every element has
+		// been seen at least once
+		public Item next() {
+			if (!hasNext()) throw new NoSuchElementException();
+			return copy[pos++];
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
 
     public static void main(String args[]) {
         // Build a queue containing the Integers 1,2,...,6:
