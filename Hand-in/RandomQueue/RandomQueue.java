@@ -4,9 +4,9 @@ import java.util.NoSuchElementException;
 
 public class RandomQueue<Item> implements Iterable<Item> {
 
-    private Item[] RQ;  // Uses Item, since it's a generic type.
+    public Item[] RQ;  // Uses Item, since it's a generic type.
     private int N = 0;  // Size of the RandomQueue
-    private int last;   // Index of the last element in the array
+    //private int last;   // Index of the last element in the array
 
     public RandomQueue(){ // create an empty random queue
       // Java is stupid, and you have to typecast the instance of Item
@@ -25,8 +25,8 @@ public class RandomQueue<Item> implements Iterable<Item> {
   		// increase array size if necessary
   		if(N == RQ.length) resize(2 * RQ.length);
   		// just add a new item at the last available index the array
-  		RQ[last++] = item;
-  		N++;
+  		RQ[N++] = item;
+  		//N++;
 	  }
 
     public Item sample(){ // return (but do not remove) a random item
@@ -39,12 +39,12 @@ public class RandomQueue<Item> implements Iterable<Item> {
       // get random element and overwrite index with last element
 		  int i = StdRandom.uniform(N);
 		  Item item = RQ[i];
-		  RQ[i] = RQ[last-1];
+		  RQ[i] = RQ[N-1];
 
       // Null last element value (delete) and update counters
-		  RQ[last-1] = null;
+		  RQ[N-1] = null;
 		  N--;
-		  last--;
+		  //last--;
 
       // shrink array if necessary
 		  if (N > 0 && N == RQ.length/4) resize(RQ.length/2);
@@ -64,7 +64,7 @@ public class RandomQueue<Item> implements Iterable<Item> {
   			temp[i] = RQ[i];
   		}
   		RQ = temp;
-  		last = N;
+  		//last = N;
   	}
 
     // RandomIterator class
@@ -75,7 +75,7 @@ public class RandomQueue<Item> implements Iterable<Item> {
 
 		public RandomIterator() {
 			// copy q
-			for (int i = 0; i < last; i++) {
+			for (int i = 0; i < N; i++) {
 				copy[i] = RQ[i];
 			}
 
