@@ -6,60 +6,55 @@ public class GiantBook2 {
 
 
 public static void main(String[] args){
-		int T=2;
+		int T=Integer.parseInt(args[1]);
 		int[] Tconnected=new int[T];
-		
 		int[] Tgiant=new int[T];
-			for(int d=0;d<T;d++)
-				StdOut.println("waaaaaaaaaaaaa "+Tgiant[d]);
 		int[] TnonIsolated=new int[T];
 		for(int j=0;j<T;j++){
-  		//int N = StdIn.readInt();
-		int N=4;
+		int N=Integer.parseInt(args[0]);
         MyWeightedQuickUnionUF2 uf = new MyWeightedQuickUnionUF2(N);
 		Random r=new Random();
-		
-		int i=0;
-      while (i<N) {
-			i++;
+		boolean connected=false;
+		boolean giant=false;
+		boolean iso=false;
+      while (!connected||!giant||!iso) {
             int p = r.nextInt(N);
             int q = r.nextInt(N);
 			uf.union(p, q);
-			StdOut.println(p+" - "+q);
-			boolean connected=uf.isConnected();
+			connected=uf.isConnected();
 			if(connected){
-				StdOut.println("all components are connected -- number of unions : "+uf.getNumberOfUnions());
-				if(Tconnected[j]==0)
+				if(Tconnected[j]==0){
 					Tconnected[j]=uf.getNumberOfUnions();
-					StdOut.println("ouuuuuuuuu");
+					StdOut.println("is connected after "+uf.getNumberOfUnions());}
 			}
-			boolean giant=uf.hasGiantComponent(p);
+			giant=uf.hasGiantComponent();
 			if(giant){
-				StdOut.println("Giant component found -- number of unions : "+uf.getNumberOfUnions());
-				if(Tgiant[j]==0)
+				if(Tgiant[j]==0){
 					Tgiant[j]=uf.getNumberOfUnions();
+					StdOut.println("giant component after "+uf.getNumberOfUnions());}
+					
 			}
-			boolean iso=uf.isNonIsolated();
+			iso=uf.isNonIsolated();
 			if(iso){
-				StdOut.println("Non isolation detected -- number of unions : "+uf.getNumberOfUnions());
-				if(TnonIsolated[j]==0)
+				if(TnonIsolated[j]==0){
 					TnonIsolated[j]=uf.getNumberOfUnions();
+					StdOut.println("non isolated after "+uf.getNumberOfUnions());}
 			}
 			
         } 
 		
            
 
-        StdOut.println(uf.count() + " components");
+     //   StdOut.println(uf.count() + " components");
 		
     
 		}
-		StdOut.println("connected mean is "+mean(Tconnected));
-		StdOut.println("connected standard dev is "+stddev(Tconnected));
-		StdOut.println("giant mean is "+mean(Tgiant));
-		StdOut.println("giant standard dev is "+stddev(Tgiant));
-		StdOut.println("non isolated mean is "+mean(TnonIsolated));
-		StdOut.println("non isolated standard dev is "+stddev(TnonIsolated));
+		StdOut.printf("connected mean is "+"%.2e\n",mean(Tconnected));
+		StdOut.printf("connected standard dev is "+"%.2e\n",stddev(Tconnected));
+		StdOut.printf("giant mean is "+"%.2e\n",mean(Tgiant));
+		StdOut.printf("giant standard dev is "+"%.2e\n",stddev(Tgiant));
+		StdOut.printf("non isolated mean is "+"%.2e\n",mean(TnonIsolated));
+		StdOut.printf("non isolated standard dev is "+"%.2e\n",stddev(TnonIsolated));
 	}
 
 public static double mean(int[] a) {

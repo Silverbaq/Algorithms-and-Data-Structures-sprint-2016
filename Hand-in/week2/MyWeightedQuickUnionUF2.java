@@ -2,9 +2,10 @@ import edu.princeton.cs.algs4.*;
 public class MyWeightedQuickUnionUF2 {
     private int[] parent;   // parent[i] = parent of i
     private int[] size;     // size[i] = number of sites in subtree rooted at i
-	private int[] connection;
     private int count;      // number of components
-	private int nu;
+	private int nu;			// number of union operations
+	private int max;
+	private int x;
 
 public int getNumberOfUnions(){
 	return nu;
@@ -12,14 +13,13 @@ public int getNumberOfUnions(){
 
  public MyWeightedQuickUnionUF2(int N) {
         count = N;
+		x=N;
 		nu=0;
         parent = new int[N];
         size = new int[N];
-		connection=new int[N];
         for (int i = 0; i < N; i++) {
             parent[i] = i;
             size[i] = 1;
-			connection[i]=0;
         }
     }
 
@@ -79,21 +79,28 @@ public int getNumberOfUnions(){
      */
     public void union(int p, int q) {
 		nu++;
-		connection[p]=1;
-		connection[q]=1;
         int rootP = find(p);
         int rootQ = find(q);
         if (rootP == rootQ) return;
 
         // make smaller root point to larger one
+		if(size[rootP]==1&&p!=q)
+			x--;
+		if(size[rootQ]==1&&p!=q)
+			x--;
         if (size[rootP] < size[rootQ]) {
             parent[rootP] = rootQ;
             size[rootQ] += size[rootP];
+			if(size[rootQ]>max)
+				max=size[rootQ];
         }
         else {
             parent[rootQ] = rootP;
             size[rootP] += size[rootQ];
+			if(size[rootP]>max)
+				max=size[rootP];
         }
+		
         count--;
 		
 		
@@ -101,29 +108,15 @@ public int getNumberOfUnions(){
 		}
 
 	public boolean isNonIsolated(){
-		for(int i=0;i<connection.length;i++){
-			if(connection[i]!=1)
-				return false;
-		}
-		return true;
+		return(x==0);
 	}
 
-	public boolean hasGiantComponent(int p){
-		for(int i=0;i<size.length;i++){
-			if(size[i]>(count/2))
-				return true;
-		}
-		return(false);
+	public boolean hasGiantComponent(){
+		return (max>=((parent.length+1)/2));
 	}	
 
 	public boolean isConnected(){
-		for(int i=1;i<parent.length;i++){
-			if(!connected(0,i))
-				return false;
-		}	
-			return true;
-	}
-
+		return (count==1);}
 
     }
 
