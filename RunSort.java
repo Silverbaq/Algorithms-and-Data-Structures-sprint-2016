@@ -13,25 +13,34 @@ while(i<a.length){
 		low=i;
 	int j=i+1;
 	String str=(String)a[i];
-//	int lengthOfRun=0;
+	//int lengthOfRun=0;
 	while(j<a.length&&(less(a[i],a[j])||a[i].equals(a[j]))){
-		str+=a[j];i=j;j++;/*lengthOfRun++;*/}
-//	if(lengthOfRun<8){
-//		insertionSort(a,j);
-//	}
+		str+=a[j];i=j;j++;
+		//lengthOfRun++;
+}
+	//if(lengthOfRun<8){
+		//insertionSort(a,j);
+	//}
+	
 	if(b)
 		mid=j-1;
 	if(!b){
 		high=j-1;
+		if(high < mid){ i=a.length;}
+		else{
 		StdOut.println(low+" "+mid+" "+high);
-		merge(a,low,mid,high);}
+		merge(a,low,mid,high);}}
 	i=j;
 	b=!b;
 		}	
 	}
-}/*
-public static void insertionSort(Comparable a, int i){
-int N =i+8;
+}
+/*public static void insertionSort(Comparable[] a, int k){
+int N =0;
+if(k+8<a.length)
+N=k+8;
+else
+N=a.length;
 for (int i = 1; i < N; i++)
 { // Insert a[i] among a[i-1], a[i-2], a[i-3]... ..
 for (int j = i; j > 0 && less(a[j], a[j-1]); j--)
