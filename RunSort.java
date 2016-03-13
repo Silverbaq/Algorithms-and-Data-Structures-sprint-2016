@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.*;
+import java.util.*;
 public class RunSort{
 static Comparable[] aux;
 public static void sort(Comparable[] a)
@@ -12,10 +13,12 @@ while(i<a.length){
 	if(b)
 		low=i;
 	int j=i+1;
-	String str=(String)a[i];
+	//String str=(String)a[i];
 	//int lengthOfRun=0;
 	while(j<a.length&&(less(a[i],a[j])||a[i].equals(a[j]))){
-		str+=a[j];i=j;j++;
+//		str+=a[j];
+		i=j;
+		j++;
 		//lengthOfRun++;
 }
 	//if(lengthOfRun<8){
@@ -26,7 +29,7 @@ while(i<a.length){
 		mid=j-1;
 	if(!b){
 		high=j-1;
-		if(high < mid){ i=a.length;}
+		if(high < mid){ j=a.length;}
 		else{
 		StdOut.println(low+" "+mid+" "+high);
 		merge(a,low,mid,high);}}
@@ -72,9 +75,20 @@ public static boolean isSorted(Comparable[] a){
     return sorted;
 }
 public static void main(String[] args){
-String[] a={"a","a","b","t","d","j","g","a","x","y","k"};//{"b","x","a","d","f","k","b","a","g","c","j","u","y","z"};
+//String[] a={"a","a","b","t","d","j","g","a","x","y","k"};
+//{"b","x","a","d","f","k","b","a","g","c","j","u","y","z"};
+ArrayList<String> list=new ArrayList<String>();
+
+while(!StdIn.isEmpty()){
+String st=StdIn.readString();
+list.add(st);
+}
+
+String[] a=new String[list.size()];
+for(int i=0;i<a.length;i++)
+	a[i]=list.get(i);
 sort(a);
 for(int i=0;i<a.length;i++)
-	StdOut.print(a[i]);
+	StdOut.println(a[i]);
 	}
 }
