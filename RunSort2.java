@@ -6,16 +6,16 @@ public static void sort(Comparable[] a)
 {
 aux = new Comparable[a.length]; // Allocate space just once.
 boolean b=true;
-int low=0,mid=0,high=0;
+int low=0,mid=0,high=0,op=0;
 while(!isSorted(a)){
-int i=0;
+int i=0;op++;
 while(i<a.length){
 	if(b)
 		low=i;
 	int j=i+1;
 	//String str=(String)a[i];
 	int lengthOfRun=0;
-	int t=i;
+	//int t=i;
 	while(j<a.length&&(less(a[i],a[j])||a[i].equals(a[j]))){
 //		str+=a[j];
 		i=j;
@@ -23,9 +23,8 @@ while(i<a.length){
 		lengthOfRun++;
 }
 	if(lengthOfRun<8){
-		insertionSort(a,t);
-		i=i+(64-lengthOfRun)+1;
-		j=i+1;
+		insertionSort(a,j);
+		StdOut.println(op+"j = "+j);
 	}
 
 	if(b)
@@ -43,11 +42,11 @@ while(i<a.length){
 }
 public static void insertionSort(Comparable[] a, int k){
 int N =0;
-if(k+64<a.length)
-N=k+64;
+if(k+8<a.length)
+N=k+8;
 else
 N=a.length;
-for (int i = 1; i < N; i++)
+for (int i = k+1; i < N; i++)
 { // Insert a[i] among a[i-1], a[i-2], a[i-3]... ..
 for (int j = i; j > 0 && less(a[j], a[j-1]); j--)
 exch(a, j, j-1);
@@ -77,7 +76,7 @@ public static boolean isSorted(Comparable[] a){
 }
 public static void main(String[] args){
 //int[] a={111,10111,121658,1533893,1538464,56498};
-//{"b","x","a","d","f","k","b","a","g","c","j","u","y","z"};
+//Comparable []a={"b","x","a","d","f","k","b","a","g","c","j","u","y","z"};
 ArrayList<Comparable> list=new ArrayList<Comparable>();
 
 while(!StdIn.isEmpty()){
