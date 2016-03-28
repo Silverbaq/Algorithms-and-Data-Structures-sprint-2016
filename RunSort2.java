@@ -14,7 +14,7 @@ while(i<a.length){
 		low=i;
 	int j=i+1;
 	//String str=(String)a[i];
-	int lengthOfRun=0;
+	int lengthOfRun=1;
 	//int t=i;
 	while(j<a.length&&(less(a[i],a[j])||a[i].equals(a[j]))){
 //		str+=a[j];
@@ -24,7 +24,7 @@ while(i<a.length){
 }
 	if(lengthOfRun<8){
 		insertionSort(a,j);
-		StdOut.println(op+"j = "+j);
+		//StdOut.println(op+"j = "+j);
 	}
 
 	if(b)
@@ -48,9 +48,10 @@ else
 N=a.length;
 for (int i = k+1; i < N; i++)
 { // Insert a[i] among a[i-1], a[i-2], a[i-3]... ..
-for (int j = i; j > 0 && less(a[j], a[j-1]); j--)
+for (int j = i; j > k && less(a[j], a[j-1]); j--)
 exch(a, j, j-1);
 }
+
 }
 private static void exch(Comparable[] a, int i, int j)
 { Comparable t = a[i]; a[i] = a[j]; a[j] = t; }
