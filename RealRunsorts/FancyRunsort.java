@@ -22,7 +22,7 @@ while(!isSorted(a)){
 			insertionSort(a,j-lengthOfRun);
 			didSort=true;
 		}
-		if(b) 
+		if(b)
 			mid=limit(didSort,a,j-1,lengthOfRun);
 			else {
 				high=limit(didSort,a,j-1,lengthOfRun);
