@@ -76,10 +76,10 @@
 
   \section{Implementation details}
 
-  We implemented the algorithm of Prims, using IndexMinPQ. 
-  The total running time for implementation is $O(n^3+\log^2 m)$.\sidenote{%
-  Replace as necessary.
-  Use $n$ for the number of vertices,
-    $m$ for the number of edges in the input graph.}
+  We implemented Prim's algorithm(eager version), using
+  an indexed priority queue. It is used for finding the
+  edge with the minimum weight, which is connecting the
+  MST to the vertices not belonging to the MST. The total
+  running time is O( m log(n)).
 
 \end{document}
